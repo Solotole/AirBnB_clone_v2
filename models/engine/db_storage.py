@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """New engine storage"""
 from sqlalchemy import (create_engine, orm)
-from models.base_model import Base
+from models.base_model import Base, BaseModel
 import os
 from models.city import City
 from models.state import State
@@ -11,7 +11,7 @@ class DBStorage:
     """engine storage class"""
     __engine = None
     __session = None
-    cities = orm.relationaship("City", cascade="all, delete", backref='state')
+    cities = orm.relationship("City", cascade="all, delete", backref='state')
 
     def __init__(self):
         """class initialization method"""
@@ -19,7 +19,7 @@ class DBStorage:
         user = os.getenv("HBNB_MYSQL_USER")
         password = os.getenv("HBNB_MYSQL_PWD")
         host = os.getenv("HBNB_MYSQL_HOST", "localhost")
-        database = os.etenv("HBNB_MYSQL_DB")
+        database = os.getenv("HBNB_MYSQL_DB")
         self.__engine = create_engine(string.format(user, password, host, database, pool_pre_ping=True))
         if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
@@ -51,6 +51,6 @@ class DBStorage:
 
     def reload(self):
         """create all tables in the database"""
-        Base.metadata.create_all(engine)
+        Base.metadata.create_all(self.__engine)
         Session = orm.scoped_session(orm.sessionmaker(bind=self.__engine, expire_on_commit="False"))
         self.__session = Session()
