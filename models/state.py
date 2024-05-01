@@ -13,7 +13,7 @@ class State(BaseModel, Base):
                                 cascade="all, delete-orphan")
 
     @property
-    def cities:
+    def cities(self):
         """ function that returns the list of City instances
             with state_id equals to the current State.id
         """
