@@ -68,14 +68,3 @@ class FileStorage:
             del FileStorage.__objects[aimed_key]
         elif not obj:
             pass
-
-    @property
-    def cities:
-        """ function returning list of city """
-        from models.city import City
-        from models.state import State
-        instances_list = []
-        for k, v in FileStorage.__objects.items():
-            if 'City' in k and City.state_id == State.id:
-                instances_list.append(v)
-        return instances_list
