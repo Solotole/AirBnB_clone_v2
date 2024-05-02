@@ -5,13 +5,16 @@ from models.base_model import Base, BaseModel
 import os
 from models.city import City
 from models.state import State
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+from models.user import User
 
 
 class DBStorage:
     """engine storage class"""
     __engine = None
     __session = None
-    cities = orm.relationship("City", cascade="all, delete", backref='state')
 
     def __init__(self):
         """class initialization method"""
