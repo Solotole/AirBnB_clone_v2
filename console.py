@@ -19,15 +19,15 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+            }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
+            'number_rooms': int, 'number_bathrooms': int,
+            'max_guest': int, 'price_by_night': int,
+            'latitude': float, 'longitude': float
             }
 
     def preloop(self):
@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
                     # check for *args or **kwargs
                     if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
-                        _args = pline
+                                _args = pline
                     else:
                         _args = pline.replace(',', '')
                         # _args = _args.replace('\"', '')
@@ -114,31 +114,27 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        name_class, *parameter = args.split()
-        if not args:
-            print("** class name missing **")
+        arg_s = args.split()
+        if not arg_s:
+            print("class name missing")
             return
-        elif name_class not in HBNBCommand.classes:
-            print("** class doesn't exist **")
+        elif arg_s[0] not in HBNBCommand.classes:
+            print("class doesn't exist")
             return
-        if parameter:
-            new_instance = HBNBCommand.classes[name_class]()
-            storage.save()
-            for dict_param in parameter:
-                dict_key, dict_value = dict_param.split('=')
-                if dict_value[0] == '"' and dict_value[-1] == '"':
-                    set_value = dict_value[1:-1].replace('_', ' ').replace('"', '\"')
-                    new_instance.dict_param = set_value
-                elif type(dict_value) == int:
-                    set_value = dict_value
-                    new_instance.dict_param = set_value
-                elif type(dict_value) == float:
-                    set_value = dict_value
-                    new_instance.dict_param = set_value
-                else:
-                    continue
-            print(new_instance.id)
+        class_name = HBNBCommand.classes[arg_s[0]]()
+        storage.save()
+        for argument in arg_s[1:]:
+            dict_args = argument.split('=')
+            if dict_args[1][0] == '"' and dict_args[1][-1] == '"':
+                value = dict_args[1][1:-1].replace('', ' ').replace('"', '"')
+                setattr(class_name, dict_args[0], dict_args[1])
+            elif type(eval(str(dict_args[1]))).__name__ == 'float':
+                setattr(class_name, dict_args[0], dict_args[1])
+            elif type(eval(dict_args[1])).__name__ == 'int':
+                setattr(class_name, dict_args[0], dict_args[1])
+            else:
+                pass
+            print(class_name.id)
             storage.save()
 
     def help_create(self):
@@ -224,9 +220,8 @@ class HBNBCommand(cmd.Cmd):
             if len(args) != 0:
                 if type(v) is eval(args):
                     _list.append(str(v))
-            else:
-                new_list.append(str(v))
-
+                else:
+                    new_list.append(str(v))
         print(new_list)
 
     def help_all(self):
