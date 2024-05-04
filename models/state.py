@@ -10,10 +10,10 @@ class State(BaseModel, Base):
 
     name = Column(String(128), nullable=False)
     cities = orm.relationship("City", backref="state",
-                                cascade="all, delete-orphan")
+            cascade="all, delete-orphan")
 
     @property
-    def cities:
+    def cities(self):
         """ function that returns the list of City instances
             with state_id equals to the current State.id
         """

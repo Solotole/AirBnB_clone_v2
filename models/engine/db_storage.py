@@ -1,17 +1,22 @@
 #!/usr/bin/python3
 """New engine storage"""
-from sqlalchemy import (create_engine, orm)
+from sqlalchemy import (create_engine)
 from models.base_model import Base, BaseModel
+from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 from models.city import City
 from models.state import State
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+from models.user import User
+from sqlalchemy import orm
 
 
 class DBStorage:
     """engine storage class"""
     __engine = None
     __session = None
-    cities = orm.relationship("City", cascade="all, delete", backref='state')
 
     def __init__(self):
         """class initialization method"""
