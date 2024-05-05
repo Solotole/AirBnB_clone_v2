@@ -115,21 +115,22 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ functona that created instances """
+        dic_t = {}
         try:
-        if not args:
-            raise SyntaxError
-        arg_list = args.split(" ")
-        if arg_list not in HBNBComman.classes:
-            raise NameError
-        dit_t = {}
-        for arg in arg_list[1:]:
-            args_list = arg.split("=")
+            if not args:
+                raise SyntaxError
+            arg_list = args.split(" ")
+            if arg_list not in HBNBComman.classes:
+                raise NameError
+            dict_t = {}
+            for arg in arg_list[1:]:
+                args_list = arg.split("=")
                 arg_list[1] = eval(arg_list[1])
                 if isinstance((arg_list[1]), str):
                     arg_list[1] = arg_list[1].replace(
-                        "_", " ").
+                        "_", " ")
                     arg_list[1] = arg_list[1].replace('"', '\\"')
-                kw[arg_list[0]] = arg_list[1]
+                dict_t[arg_list[0]] = arg_list[1]
         except SyntaxError:
             print("** class name missing **")
         except NameError:
