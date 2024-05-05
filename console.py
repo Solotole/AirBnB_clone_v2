@@ -114,28 +114,30 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        arg_s = args.split()
-        if not arg_s:
-            print("class name missing")
-            return
-        elif arg_s[0] not in HBNBCommand.classes:
-            print("class doesn't exist")
-            return
-        class_name = HBNBCommand.classes[arg_s[0]]()
-        storage.save()
-        for argument in arg_s[1:]:
-            dict_args = argument.split('=')
-            if dict_args[1][0] == '"' and dict_args[1][-1] == '"':
-                value = dict_args[1][1:-1].replace('', ' ').replace('"', '"')
-                setattr(class_name, dict_args[0], dict_args[1])
-            elif type(eval(str(dict_args[1]))).__name__ == 'float':
-                setattr(class_name, dict_args[0], dict_args[1])
-            elif type(eval(dict_args[1])).__name__ == 'int':
-                setattr(class_name, dict_args[0], dict_args[1])
-            else:
-                pass
-            print(class_name.id)
-            storage.save()
+        """ functona that created instances """
+        try:
+        if not args:
+            raise SyntaxError
+        arg_list = args.split(" ")
+        if arg_list not in HBNBComman.classes:
+            raise NameError
+        dit_t = {}
+        for arg in arg_list[1:]:
+            args_list = arg.split("=")
+                arg_list[1] = eval(arg_list[1])
+                if isinstance((arg_list[1]), str):
+                    arg_list[1] = arg_list[1].replace(
+                        "_", " ").
+                    arg_list[1] = arg_list[1].replace('"', '\\"')
+                kw[arg_list[0]] = arg_list[1]
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+        class_name = HBNBCommand.classes[arg_list[0]]
+        new_instance = class_name(**dict_t)
+        new_instance.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
