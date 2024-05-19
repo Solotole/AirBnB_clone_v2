@@ -6,11 +6,14 @@ archive to the web servers
 
 from fabric.api import put, run, env
 from os.path import exists
-env.hosts = ['54.89.109.87', '100.25.190.21']
+env.hosts = ['54.174.47.226', '52.73.245.84']
 
 
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
+    """distributes an archive to the web servers
+    Args:
+        archive_path (string): parth to the 
+    """
     if exists(archive_path) is False:
         return False
     try:
