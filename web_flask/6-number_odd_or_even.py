@@ -70,13 +70,13 @@ def odd_or_even(n):
     Args:
         n (int): number to consider whether odd or even
     """
-    if n % 2 and isinstance(n, int):
+    if n % 2 != 0 and isinstance(n, int):
         return render_template(
              '6-number_odd_or_even.html',
              n=n,
              determinant='odd'
         )
-    elif n % 2 == 0 and isinstance(n, int):
+    if n % 2 == 0 and isinstance(n, int):
         return render_template(
              '6-number_odd_or_even.html',
              n=n,
