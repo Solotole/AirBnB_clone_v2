@@ -45,7 +45,7 @@ def python_default_argument(text):
         return "Python " + text
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def nuber_or_not(n):
     """ deterining if number or not
 
