@@ -71,9 +71,15 @@ def odd_or_even(n):
         n (int): number to consider whether odd or even
     """
     if n % 2:
-        return render_template('6-number_odd_or_even.html', n=n, determinant='odd')
+        return render_template(
+             '6-number_odd_or_even.html',
+             n=n, determinant='odd'
+        )
     elif n % 2 == 0:
-        return render_template('6-number_odd_or_even.html', n=n, determinant='even')
+        return render_template(
+             '6-number_odd_or_even.html',
+             n=n, determinant='even'
+        )
 
 
 if __name__ == '__main__':
