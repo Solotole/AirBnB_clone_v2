@@ -73,12 +73,14 @@ def odd_or_even(n):
     if n % 2 and isinstance(n, int):
         return render_template(
              '6-number_odd_or_even.html',
-             n=n, determinant='odd'
+             n=n,
+             determinant='odd'
         )
     elif n % 2 == 0 and isinstance(n, int):
         return render_template(
              '6-number_odd_or_even.html',
-             n=n, determinant='even'
+             n=n,
+             determinant='even'
         )
 
 
