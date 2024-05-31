@@ -75,9 +75,9 @@ def odd_or_even(n):
     if n % 2 == 0:
         determinant = 'even'
     return render_template(
-         '6-number_odd_or_even.html',
-          n=n,
-          determinant=determinant
+        '6-number_odd_or_even.html',
+        n=n,
+        determinant=determinant
         )
 
 
