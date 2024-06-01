@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+import shlex
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -113,32 +114,49 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, arg):
         """ functona that created instances """
-        dic_t = {}
-        try:
-            if not args:
-                raise SyntaxError
-            arg_list = args.split(" ")
-            if arg_list not in HBNBComman.classes:
-                raise NameError
-            dict_t = {}
-            for arg in arg_list[1:]:
-                args_list = arg.split("=")
-                arg_list[1] = eval(arg_list[1])
-                if isinstance((arg_list[1]), str):
-                    arg_list[1] = arg_list[1].replace(
-                        "_", " ")
-                    arg_list[1] = arg_list[1].replace('"', '\\"')
-                dict_t[arg_list[0]] = arg_list[1]
-        except SyntaxError:
+        classes = {
+                'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                'State': State, 'City': City, 'Amenity': Amenity,
+                'Review': Review
+                }
+        args = arg.split()
+
+        if len(args) == 0:
             print("** class name missing **")
-        except NameError:
+            return
+
+        new_args = []
+        for a in args:
+            start_idx = a.find("=")
+            a = a[0: start_idx] + a[start_idx:].replace('_', ' ')
+            new_args.append(a)
+
+        if new_args[0] in classes:
+            new_instance = classes[new_args[0]]()
+            new_dict = {}
+            for a in new_args:
+                if a != new_args[0]:
+                    new_list = a.split('=')
+                    new_dict[new_list[0]] = new_list[1]
+
+            for k, v in new_dict.items():
+                if v[0] == '"':
+                    v_list = shlex.split(v)
+                    new_dict[k] = v_list[0]
+                    setattr(new_instance, k, new_dict[k])
+                else:
+                    try:
+                        if type(eval(v)).__name__ == 'int':
+                            v = eval(v)
+                    except:
+                        continue
+                    setattr(new_instance, k, v)
+            new_instance.save()
+            print(new_instance.id)
+        else:
             print("** class doesn't exist **")
-        class_name = HBNBCommand.classes[arg_list[0]]
-        new_instance = class_name(**dict_t)
-        new_instance.save()
-        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
@@ -222,10 +240,10 @@ class HBNBCommand(cmd.Cmd):
         for k, v in new_list.items():
             if len(args) != 0:
                 if type(v) is eval(args):
-                    _list.append(str(v))
+                    print_list.append(str(v))
                 else:
-                    new_list.append(str(v))
-        print(new_list)
+                    print_list.append(str(v))
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
