@@ -5,6 +5,7 @@ from models.base_model import Base, BaseModel
 from sqlalchemy import String, Column, orm
 from os import getenv
 
+
 class State(BaseModel, Base):
     """ State class """
     if engine_storage == "db":
@@ -18,7 +19,7 @@ class State(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """ State class initialization """
-        super.__inint__(*args, **kwargs);
+        super.__inint__(*args, **kwargs)
 
     if storage_engine != "db":
         @property
