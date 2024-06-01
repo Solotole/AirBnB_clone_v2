@@ -19,8 +19,8 @@ class State(BaseModel, Base):
         """
         from models import storage
         important_list = []
-        single_cities = storage.all(City).keys()
-        for single_city in single_cities.values():
-            if self.id == single_city.state_id:
-                important_list.append(single_city)
+        single_cities = storage.all(City).values()
+        for single_city in single_cities:
+            if self.id == city.state_id:
+                important_list.append(city)
         return important_list
