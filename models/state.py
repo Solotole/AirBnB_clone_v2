@@ -7,10 +7,10 @@ from sqlalchemy import String, Column, orm
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
-
+    arg1 = "state"
+    arg2 = "all, delete-orphan"
     name = Column(String(128), nullable=False)
-    cities = orm.relationship("City", backref="state",
-            cascade="all, delete-orphan")
+    cities = orm.relationship("City", backref=arg1, cascade=arg2)
 
     @property
     def cities(self):
