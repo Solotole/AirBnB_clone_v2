@@ -10,12 +10,11 @@ from models.review import Review
 from models.user import User
 from models.place import Place
 
-
-if getenv("HBNB_TYPE_STORAGE") == "db":
+engine_storage = getenv("HBNB_TYPE_STORAGE")
+if engine_storage == "db":
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
-    storage.reload()
 else:
     from models.engine.file_storage import FileStorage
     storage = FileStorage()
-    storage.reload()
+storage.reload()
