@@ -33,21 +33,19 @@ class DBStorage:
         """query on the current database session"""
         dictionary = {}
         if cls:
-            objects = self.__session.query(cls).all()
-            key = f"{obj.__class__.__name__}.{obj.id}"
-            dictionary[key] = obj
+            if type(cls) is str:
+                cls = ecal(cls)
+            objects = self.__session.query(cls)
+            for obj in objects:
+                key = f"{type(obj).__name__}.{obj.id}"
+                dictionary[key] = obj
         elif not cls:
             determinant = [Place, Review, User, State, City, Amenity]
             for classing in determinant:
                 dict_session = self.__session.query(classing).all()
                 for values in dict_session:
-                    new_key = f"{values.__class__.__name__}, {values.id}"
+                    new_key = f"{type(values).__name__}, {values.id}"
                     dictionary[new_key] = values
-        return dictionary
-
-        for obj in objects:
-            key = f"{obj.__class__.__name__}.{obj.id}"
-            dictionary[key] = obj
         return dictionary
 
     def new(self, obj):
@@ -68,3 +66,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = orm.scoped_session(orm.sessionmaker(bind=self.__engine, expire_on_commit=False))
         self.__session = Session()
+
+    def close(self):
+        """ closes the current session """
+        self.__session.close()

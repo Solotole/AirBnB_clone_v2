@@ -68,3 +68,8 @@ class FileStorage:
             del FileStorage.__objects[aimed_key]
         elif not obj:
             pass
+
+    def close(self):
+        """ calling reload method
+        """
+        self.reload()
