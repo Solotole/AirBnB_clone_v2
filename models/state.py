@@ -7,21 +7,21 @@ from os import getenv
 
 class State(BaseModel, Base):
     """ State class """
+    __tablename__ = "states"
+    arg1 = "state"
+    arg2 = "all, delete-orphan"
+    name = Column(String(128), nullable=False)
+    cities = orm.relationship("City", backref=arg1, cascade=arg2)
+
     import models
+    if models.engine_storage == "fs":
+        def __init__(self, *args, **kwargs):
+            """ State class initialization """
+            self.name = kwargs['name']
+            kwargs = {}
+            super().__init__()
+
     if models.engine_storage == "db":
-        __tablename__ = "states"
-        arg1 = "state"
-        arg2 = "all, delete-orphan"
-        name = Column(String(128), nullable=False)
-        cities = orm.relationship("City", backref=arg1, cascade=arg2)
-    else:
-        name = ""
-
-    def __init__(self, *args, **kwargs):
-        """ State class initialization """
-        super().__init__(*args, **kwargs)
-
-    if models.engine_storage != "db":
         @property
         def cities(self):
             """ function that returns the list of City instances
