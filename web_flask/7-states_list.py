@@ -15,8 +15,7 @@ app = Flask(__name__)
 def acquiring_displaying():
     """ retrieving and sorting the data """
     states = storage.all("State")
-    sorted_list = sorted(states.values(), key=lambda state: state.name)
-    return render_template('7-states_list.html', states=sorted_list)
+    return render_template('7-states_list.html', states=states)
 
 
 if __name__ == "__main__":
