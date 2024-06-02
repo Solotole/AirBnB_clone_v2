@@ -70,8 +70,10 @@ def odd_or_even(n):
     Args:
         n (int): number to consider whether odd or even
     """
+    value = ""
     if isinstance(n, int):
-        return render_template("6-number_odd_or_even.html", n=n)
+        value = "even" if n % 2 == 0 else "odd"
+        return render_template("6-number_odd_or_even.html", n=n, value=value)
 
 
 if __name__ == '__main__':
