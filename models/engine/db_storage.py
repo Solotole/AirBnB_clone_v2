@@ -36,7 +36,7 @@ class DBStorage:
         dictionary = {}
         if cls:
             if type(cls) is str:
-                cls = ecal(cls)
+                cls = eval(cls)
             objects = self.__session.query(cls)
             for obj in objects:
                 key = f"{type(obj).__name__}.{obj.id}"

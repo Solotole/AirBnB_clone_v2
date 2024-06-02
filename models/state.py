@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-import models
 from models.base_model import Base, BaseModel
 from sqlalchemy import String, Column, orm
 from os import getenv
@@ -8,7 +7,8 @@ from os import getenv
 
 class State(BaseModel, Base):
     """ State class """
-    if engine_storage == "db":
+    import models
+    if models.engine_storage == "db":
         __tablename__ = "states"
         arg1 = "state"
         arg2 = "all, delete-orphan"
@@ -19,9 +19,9 @@ class State(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """ State class initialization """
-        super.__inint__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-    if storage_engine != "db":
+    if models.engine_storage != "db":
         @property
         def cities(self):
             """ function that returns the list of City instances
