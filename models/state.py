@@ -21,7 +21,7 @@ class State(BaseModel, Base):
             kwargs = {}
             super().__init__()
 
-    if models.engine_storage == "db":
+    if models.engine_storage != "db":
         @property
         def cities(self):
             """ function that returns the list of City instances
