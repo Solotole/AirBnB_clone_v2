@@ -14,7 +14,7 @@ def teardown_db_session(error):
 @app.route('/states', strict_slashes=False)
 def state():
     """Displays a html page with states"""
-    states = storage.all(State)
+    states = storage.all("State")
     return render_template('9-states.html', states=states, way='all')
 
 
@@ -23,7 +23,7 @@ def states_by_id():
     """ retrieving and displaying cities of a
         state the data
     """
-    for state in storage.all(State).values():
+    for state in storage.all("State").values():
         if state.id == id:
             return render_template('9-states.html', states=state, way='id')
     return render_template('9-states.html', states=state, way='none')
