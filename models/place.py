@@ -40,7 +40,7 @@ class Place(BaseModel, Base):
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         amenities = relationship(
                             "Amenity", secondary=place_amenity,
-                            back_populates="place_amenities",
+                            backref="place_amenities",
                             viewonly=False)
         reviews = relationship("Review", passive_deletes=True, backref="place")
         name = Column(String(128), nullable=False)
