@@ -33,11 +33,15 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
+        classes = {
+                "City": City, "State": State, "Place": Place,
+                'Review': Review,
+                'Amenity': Amenity, 'User': User,
+        }
         dictionary = {}
         if cls:
             if type(cls) is str:
-                cls = eval(cls)
-            objects = self.__session.query(cls)
+                objects = self.__session.query(classes[cls])
             for obj in objects:
                 key = f"{type(obj).__name__}.{obj.id}"
                 dictionary[key] = obj
